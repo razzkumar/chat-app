@@ -1,0 +1,24 @@
+{
+  "name": "mern",
+  "version": "1.0.0",
+  "description": "MERN STACK boileplates",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run start --prefix ./admin\" \"npm run start --prefix ./backend\" \"npm run start --prefix ./backend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/razzkumar/mern.git"
+  },
+  "keywords": [],
+  "author": "raj kumar rai danuwar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/razzkumar/mern/issues"
+  },
+  "homepage": "https://github.com/razzkumar/mern#readme",
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
