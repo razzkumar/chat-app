@@ -1,11 +1,12 @@
 {
   "name": "mern",
   "version": "1.0.0",
-  "description": "MERN STACK boileplates",
+  "description": "Chat App",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"npm run start --prefix ./admin\" \"npm run start --prefix ./backend\" \"npm run start --prefix ./backend\""
+    "start": "concurrently \"npm run start --prefix ./backend\" \"npm run start --prefix ./frontend\"",
+    "build": "concurrently  \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\" && npm run sync --prefix ./backend"
   },
   "repository": {
     "type": "git",

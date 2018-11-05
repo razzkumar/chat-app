@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "chat-app-backend",
   "version": "1.0.0",
   "description": "this is the boilerplates for the nodejs backend with modern js",
   "main": "index.js",
@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "dev:build": "webpack -w --mode=development",
-    "build": "webpack -mode=production",
+    "build": "webpack --mode=production",
     "dev": "cross-env NODE_ENV=development nodemon  dist/index.bundle.js",
+    "sync": "rsync -avP ./dist/ yarn.lock package.json  ../final",
     "start": "yarn && concurrently \"yarn run dev:build\" \"yarn run dev\""
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "socket.io": "^2.1.1",
     "validator": "^10.7.1"
   },
   "devDependencies": {
