@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from "react";
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/common/Login";
+import Register from "./components/common/Register";
 import Landing from "./components/Landing";
 
 class App extends Component {

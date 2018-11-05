@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import * as actions from "../reduxStore/actions";
+import * as actions from "../../reduxStore/actions";
 import { connect } from "react-redux";
-import { getJWT } from "../utils/helpers";
+import { getJWT } from "../../utils/helpers";
 import { withRouter } from "react-router-dom";
 
 class Login extends Component {
