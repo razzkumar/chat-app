@@ -13,6 +13,7 @@
     "start": "yarn && concurrently \"yarn run dev:build\" \"yarn run dev\""
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",

@@ -227,7 +227,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _socket = __webpack_require__(/*! socket.io */ \"socket.io\");\n\nvar _socket2 = _interopRequireDefault(_socket);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = server => {\n  const io = (0, _socket2.default)(server);\n  // This is what the socket.io syntax is like, we will work this later\n\n  io.on(\"connection\", socket => {\n    console.log(\"User connected\");\n    socket.on(\"disconnect\", () => {\n      console.log(\"user disconnected\");\n    });\n  });\n};\n\n//# sourceURL=webpack:///./src/socket/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _socket = __webpack_require__(/*! socket.io */ \"socket.io\");\n\nvar _socket2 = _interopRequireDefault(_socket);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = server => {\n  const io = (0, _socket2.default)(server);\n  // This is what the socket.io syntax is like, we will work this later\n\n  io.on(\"connection\", socket => {\n    console.log(\"User connected\");\n    socket.emit(\"news\", { hello: \"world\" });\n    socket.on(\"disconnect\", () => {\n      console.log(\"user disconnected\");\n    });\n  });\n};\n\n//# sourceURL=webpack:///./src/socket/index.js?");
 
 /***/ }),
 
