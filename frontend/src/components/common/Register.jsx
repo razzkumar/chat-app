@@ -35,7 +35,7 @@ class Register extends Component {
     } = this.props.match;
     return (
       <div className="container">
-        <div className="jumbotron mt-5">
+        <div className="jumbotron mt-5" style={{ background:"#fcb4b8"}}>
           {error && (
             <div
               className="alert-danger p-2 text-center"

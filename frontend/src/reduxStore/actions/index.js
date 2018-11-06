@@ -7,16 +7,16 @@ export const logIn = (data, history) => async dispatch => {
   try {
     const user = await axios.post("/api/v1/users/login", data);
     if (user && user.data && user.data.token) {
+      localStorage.setItem("chatter-auth", user.data.token);
       history.push("/");
-      localStorage.setItem("onpay-jwt", user.data.token);
       window.location.reload();
     } else {
-      localStorage.removeItem("onpay-jwt");
+      localStorage.removeItem("chatter-auth");
       history.push("/login/error");
     }
   } catch (e) {
     if (e) {
-      localStorage.removeItem("onpay-jwt");
+      localStorage.removeItem("chatter-auth");
       history.push("/login/error");
     }
   }
@@ -47,7 +47,7 @@ export const getProfile = () => async dispatch => {
     let disp = { type: GET_PROFILE, payload: profile.data };
     profile && profile.data && dispatch(disp);
   } catch (err) {
-    localStorage.removeItem("onpay-jwt");
+    localStorage.removeItem("chatter-auth");
     window.location.reload();
   }
 };

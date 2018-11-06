@@ -6,6 +6,9 @@ import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import reduxStore from "./reduxStore";
+import "jquery";
+import "popper.js";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 const store = reduxStore();
 
 ReactDOM.render(

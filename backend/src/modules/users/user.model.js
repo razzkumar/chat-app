@@ -35,6 +35,14 @@ const UserSchema = new Schema({
     trim: true,
     index: { unique: true }
   },
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      default: "5be13d15ea956e6052000dea"
+    }
+  ],
   password: {
     type: String,
     required: [true, "Password is required!"],
@@ -69,7 +77,22 @@ UserSchema.methods = {
   createToken() {
     return jwt.sign({ _id: this._id }, constants.JWT_SECRET);
   },
-  toJSON() {
+  toFriendsJSON() {
+    return {
+      username: this.userName,
+      name: `${this.firstName} ${this.lastName}`
+    };
+  },
+  toAuthJSON() {
+    return {
+      id: this._id,
+      friends: this.friends,
+      email: this.email,
+      userName: this.userName,
+      name: `${this.firstName} ${this.lastName}`
+    };
+  },
+  toAuthTokenJSON() {
     return {
       token: `${this.createToken()}`
     };

@@ -1,15 +1,15 @@
 const devConfig = {
-  MONGO_URL: "mongodb://localhost/boilderplate-dev",
+  MONGO_URL: "mongodb://localhost/chatter-dev",
   JWT_SECRET: "Thisisthesecretkey"
 };
 
 const testConfig = {
-  MONGO_URL: "mongodb://localhost/boilderplate-test",
+  MONGO_URL: "mongodb://localhost/chatter-test",
   JWT_SECRET: "Thisisthesecretkey"
 };
 
 const prodConfig = {
-  MONGO_URL: "mongodb://localhost/boilderplate-prod",
+  MONGO_URL: "mongodb://localhost/chatter-prod",
   JWT_SECRET: "Thisisthesecretkey"
 };
 

@@ -34,7 +34,7 @@ class Login extends Component {
     return (
       <div className="container mt-5">
         <div className="row">
-          <div className="jumbotron col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+          <div className="jumbotron col-sm-12 col-md-6 offset-md-3 col-lg-4 offset-lg-4" style={{ background:"#fcb4b8"}}>
             {error && (
               <div className="alert-danger">
                 Email or password not matched!!

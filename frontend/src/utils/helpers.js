@@ -1,7 +1,7 @@
-export const getJWT = () => localStorage.getItem("onpay-jwt");
+export const getJWT = () => localStorage.getItem("chatter-auth");
 export const authHeader = {
   headers: {
-    Authorization: getJWT()
+    Authorization: `JWT ${getJWT()}`
   }
 };
 
