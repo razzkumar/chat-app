@@ -5,5 +5,7 @@ import { authJwt } from "../../services/auth/auth.services";
 const routes = new Router();
 
 routes.post("/create-chatroom", authJwt, chatController.createChatroom);
+routes.get("/chatrooms", authJwt, chatController.getChatrooms);
+routes.get("/members/:id", authJwt, chatController.getChatroomsMembers);
 
 export default routes;

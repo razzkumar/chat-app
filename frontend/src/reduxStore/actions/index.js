@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_PROFILE, GET_CONNECTED_USER } from "../constants";
+import {
+  GET_PROFILE,
+  GET_CONNECTED_USER,
+  GET_CHAT_ROOM,
+  GET_CHAT_ROOM_MEMBER
+} from "../constants";
 import { authHeader } from "../../utils/helpers";
 
 // ===========LOGIN===========
@@ -81,5 +86,30 @@ export const createChatRoom = (data, history) => async dispatch => {
     if (e) {
       history.push("/create-chatroom/error");
     }
+  }
+};
+
+// ===========GET--CHATROOM================
+
+export const getChatrooms = () => async dispatch => {
+  try {
+    const chatrooms = await axios.get("/api/v1/chat/chatrooms", authHeader);
+    let disp = { type: GET_CHAT_ROOM, payload: chatrooms.data };
+    chatrooms && chatrooms.data && dispatch(disp);
+  } catch (err) {
+    console.log("ERROR", err);
+  }
+};
+export const getChatroomMember = id => async dispatch => {
+  try {
+    const members = await axios.get(`/api/v1/chat/members/${id}`, authHeader);
+    if (members) {
+      let disp = { type: GET_CHAT_ROOM_MEMBER, payload: members.data };
+      members && members.data && dispatch(disp);
+    } else {
+      console.log("ERROR ");
+    }
+  } catch (err) {
+    console.log("ERROR", err);
   }
 };

@@ -5,7 +5,7 @@ const ChatroomSchema = new Schema({
     required: true,
     trim: true
   },
-  member: [
+  members: [
     {
       type: Schema.Types.ObjectId,
       ref: "User",

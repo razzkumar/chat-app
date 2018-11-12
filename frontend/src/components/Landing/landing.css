@@ -54,3 +54,15 @@
 .you {
   color: green;
 }
+
+.chatroom-container {
+}
+
+.room > a {
+  color: #000;
+  text-decoration: none;
+}
+
+.room > a:hover {
+  text-decoration: none;
+}

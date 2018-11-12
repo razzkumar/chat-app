@@ -17,4 +17,12 @@ const ChatRoomMessageSchema = new Schema({
   }
 });
 
+ChatRoomMessageSchema.methods = {
+  toChatrooms() {
+    return {
+      id: this._id,
+      chatroom: this.chatroom
+    };
+  }
+};
 export default mongoose.model("Chatroommessage", ChatRoomMessageSchema);

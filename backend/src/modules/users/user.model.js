@@ -54,6 +54,7 @@ UserSchema.pre("save", function(next) {
   }
   return next();
 });
+
 UserSchema.methods = {
   // Hasing and varifying password
   _hashPassword(password) {

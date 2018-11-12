@@ -1,5 +1,3 @@
-import mongoose from "mongoose";
-
 import Chatroom from "./chatroom.model";
 
 export async function createChatroom(req, res) {
@@ -25,4 +23,26 @@ export async function createChatroom(req, res) {
   } catch (e) {
     return res.status(500).json(e);
   }
+}
+
+export async function getChatrooms(req, res, next) {
+  const chatrooms = await Chatroom.find({}, "chatroom _id");
+  if (chatrooms) {
+    res.status(200).json(chatrooms);
+  } else {
+    res.status(400);
+  }
+  next();
+}
+export async function getChatroomsMembers(req, res, next) {
+  const chatroomMembers = await Chatroom.findById(
+    req.params.id,
+    "members -_id"
+  ).populate("members", "userName _id");
+  if (chatroomMembers) {
+    res.status(200).json(chatroomMembers.members);
+  } else {
+    res.status(400);
+  }
+  next();
 }
