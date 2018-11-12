@@ -10,10 +10,11 @@ import AuthLanding from "./AuthLanding";
 class Landing extends Component {
   render() {
     let auth = getJWT();
+    let { profile } = this.props;
     return (
       <div id={!auth ? "landing" : "auth-landing"}>
-        {auth ? (
-          <AuthLanding />
+        {auth && profile ? (
+          <AuthLanding profile={profile} />
         ) : (
           <Fragment>
             <img src={bg} alt="bg" />
@@ -40,7 +41,7 @@ class Landing extends Component {
     );
   }
 }
-const mapStateToProps = state => ({ state });
+const mapStateToProps = state => ({ profile: state.getProfileReducer });
 export default connect(
   mapStateToProps,
   actions

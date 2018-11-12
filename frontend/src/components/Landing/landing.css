@@ -36,3 +36,21 @@
   color: black !important;
   background: rgba(255, 255, 255, 0.6);
 }
+
+.list {
+  border-right: 1px solid gray;
+  height: 80vh;
+}
+.list-item {
+  margin: 5px;
+}
+
+.chat-text-input {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.you {
+  color: green;
+}

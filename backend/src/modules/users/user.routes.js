@@ -12,6 +12,9 @@ routes.post("/signup", validate(userValidation.signup), userController.signUp);
 routes.post("/login", authLocal, userController.login);
 
 routes.get("/profile", authJwt, userController.profile);
+
 routes.get("/friends", authJwt, userController.getFriends);
+
+routes.post("/addfriend", authJwt, userController.addFriends);
 
 export default routes;

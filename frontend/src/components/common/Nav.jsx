@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { getJWT, toCapitalize } from "../../utils/helpers";
+import { getJWT } from "../../utils/helpers";
 import { connect } from "react-redux";
 import * as actions from "../../reduxStore/actions";
 import "./nav.css";
@@ -65,10 +65,6 @@ class Nav extends Component {
                       <NavLink to="/profile-edit" onClick={this.dispayProfile}>
                         Edit Profile
                       </NavLink>
-                    </div>
-                    <div>
-                      Name:{" "}
-                      {profile && profile.name && toCapitalize(profile.name)}
                     </div>
                     <div>User Name: {profile && profile.userName}</div>
                     <div onClick={this.logout}>Logout</div>

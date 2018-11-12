@@ -35,7 +35,7 @@ class Register extends Component {
     } = this.props.match;
     return (
       <div className="container">
-        <div className="jumbotron mt-5" style={{ background:"#fcb4b8"}}>
+        <div className="jumbotron mt-5" style={{ background: "#fcb4b8" }}>
           {error && (
             <div
               className="alert-danger p-2 text-center"
@@ -112,28 +112,6 @@ class Register extends Component {
                 )}
               </div>
             </div>
-            <div className="form-row">
-              <div className="form-group col-md-6">
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="firstName"
-                  name="firstName"
-                  required
-                />
-              </div>
-              <div className="form-group col-md-6">
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="lastName"
-                  name="lastName"
-                  required
-                />
-              </div>
-            </div>
             <div className="form-group">
               <label htmlFor="address">Address</label>
               <input
@@ -141,7 +119,7 @@ class Register extends Component {
                 className="form-control"
                 id="address"
                 name="address"
-                placeholder="Kathmandu"
+                placeholder="Eg:-Kathmandu"
                 required
               />
             </div>

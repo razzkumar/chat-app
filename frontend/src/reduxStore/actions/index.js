@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_PROFILE } from "../constants";
+import { GET_PROFILE, GET_CONNECTED_USER } from "../constants";
 import { authHeader } from "../../utils/helpers";
 
 // ===========LOGIN===========
@@ -49,5 +49,37 @@ export const getProfile = () => async dispatch => {
   } catch (err) {
     localStorage.removeItem("chatter-auth");
     window.location.reload();
+  }
+};
+
+export const getUsers = payload => async dispatch => {
+  let data = {
+    type: GET_CONNECTED_USER,
+    payload
+  };
+  payload && dispatch(data);
+};
+
+// =============CREATE CHAT-ROOM=============
+
+export const createChatRoom = (data, history) => async dispatch => {
+  try {
+    const chatroom = await axios.post(
+      "/api/v1/chat/create-chatroom",
+      data,
+      authHeader
+    );
+    if (chatroom && chatroom.data && chatroom.data.chatroom) {
+      console.log("chatroom", chatroom.data);
+      history.push(`/chatroom/${chatroom.data.id}`);
+    } else if (chatroom && chatroom.data.message) {
+      history.push("/create-chatroom/error-chat-room-exist");
+    } else {
+      history.push("/create-chatroom/error");
+    }
+  } catch (e) {
+    if (e) {
+      history.push("/create-chatroom/error");
+    }
   }
 };

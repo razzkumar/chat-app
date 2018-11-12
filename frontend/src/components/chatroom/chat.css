@@ -1,0 +1,11 @@
+.chat-warning {
+  text-align: center;
+  color: white;
+  font-size: 1em;
+  padding: 2px;
+  background: #f30000;
+  margin-bottom: 10px;
+}
+body {
+  line-height: unset !important;
+}

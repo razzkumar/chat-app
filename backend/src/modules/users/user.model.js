@@ -19,16 +19,6 @@ const UserSchema = new Schema({
       message: "{VALUE} is not valid email!"
     }
   },
-  firstName: {
-    type: String,
-    required: [true, "FirstName is required!"],
-    trim: true
-  },
-  lastName: {
-    type: String,
-    required: [true, "LastName is required!"],
-    trim: true
-  },
   userName: {
     type: String,
     required: [true, "UserName is required!"],
@@ -88,8 +78,7 @@ UserSchema.methods = {
       id: this._id,
       friends: this.friends,
       email: this.email,
-      userName: this.userName,
-      name: `${this.firstName} ${this.lastName}`
+      userName: this.userName
     };
   },
   toAuthTokenJSON() {
