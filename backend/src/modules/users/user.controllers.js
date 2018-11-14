@@ -40,13 +40,11 @@ export async function getFriends(req, res, next) {
 export async function addFriends(req, res, next) {
   const { friendId } = req.body;
   let { friends } = req.user;
-  let id = new mongoose.Types.ObjectId(friendId);
-
-  if (friends.indexOf(friendId) !== -1) {
-    // req.user.friends.push(friendId);
-    // let savedFriend = await req.user.save();
-    // console.log("Saved-<", savedFriend);
-    res.status(200).json({ fuck: "YOU" });
+  let id = mongoose.Types.ObjectId(friendId);
+  if (friends.indexOf(id) === -1) {
+    req.user.friends.push(id);
+    let savedFriend = await req.user.save();
+    res.status(200).json(savedFriend);
   } else {
     res.status(409).send("Already your friend");
   }

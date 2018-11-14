@@ -3,7 +3,8 @@ import {
   GET_PROFILE,
   GET_CONNECTED_USER,
   GET_CHAT_ROOM,
-  GET_CHAT_ROOM_MEMBER
+  GET_CHAT_ROOM_MEMBER,
+  GET_CHAT_ROOM_MESSAGE
 } from "../constants";
 import { authHeader } from "../../utils/helpers";
 
@@ -106,6 +107,19 @@ export const getChatroomMember = id => async dispatch => {
     if (members) {
       let disp = { type: GET_CHAT_ROOM_MEMBER, payload: members.data };
       members && members.data && dispatch(disp);
+    } else {
+      console.log("ERROR ");
+    }
+  } catch (err) {
+    console.log("ERROR", err);
+  }
+};
+export const getChatroomMessages = id => async dispatch => {
+  try {
+    const message = await axios.get(`/api/v1/chat/messages/${id}`, authHeader);
+    if (message) {
+      let disp = { type: GET_CHAT_ROOM_MESSAGE, payload: message.data };
+      message && message.data && dispatch(disp);
     } else {
       console.log("ERROR ");
     }

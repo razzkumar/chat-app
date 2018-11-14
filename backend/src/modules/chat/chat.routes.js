@@ -7,5 +7,6 @@ const routes = new Router();
 routes.post("/create-chatroom", authJwt, chatController.createChatroom);
 routes.get("/chatrooms", authJwt, chatController.getChatrooms);
 routes.get("/members/:id", authJwt, chatController.getChatroomsMembers);
+routes.get("/messages/:id", authJwt, chatController.getChatroomsMessage);
 
 export default routes;

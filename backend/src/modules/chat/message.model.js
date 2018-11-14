@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+
 const MessageSchema = new Schema({
   message: {
     type: String,

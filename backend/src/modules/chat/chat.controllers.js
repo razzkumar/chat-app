@@ -1,5 +1,5 @@
 import Chatroom from "./chatroom.model";
-
+import ChatroomMessaage from "./chatroom.message.model";
 export async function createChatroom(req, res) {
   try {
     const oldChatroom = await Chatroom.find({ chatroom: req.body.chatroom });
@@ -41,6 +41,24 @@ export async function getChatroomsMembers(req, res, next) {
   ).populate("members", "userName _id");
   if (chatroomMembers) {
     res.status(200).json(chatroomMembers.members);
+  } else {
+    res.status(400);
+  }
+  next();
+}
+export async function getChatroomsMessage(req, res, next) {
+  const ms = await Chatroom.findById(req.params.id, "messages id").populate({
+    path: "messages",
+    model: "Chatroommessage",
+    select: "-__v",
+    populate: {
+      path: "sender",
+      model: "User",
+      select: "userName -_id"
+    }
+  });
+  if (ms) {
+    res.status(200).json(ms.messages);
   } else {
     res.status(400);
   }

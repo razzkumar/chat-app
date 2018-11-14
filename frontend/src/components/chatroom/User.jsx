@@ -1,7 +1,6 @@
 import React from "react";
 
 export default ({ user, you }) => {
-  console.log("membets", user);
   return (
     <div className="list">
       <h3>Member List</h3>
@@ -12,7 +11,7 @@ export default ({ user, you }) => {
             key={d.userName + i}
           >
             <i className="fa fa-user" /> &nbsp;
-            {d.userName}ffasfsd
+            {d.userName}
           </div>
         ))}
     </div>

@@ -8,7 +8,6 @@ const getUsers = () => {
     return users[key].username;
   });
 };
-
 const createSocket = user => {
   let cur_user = users[user.uid],
     updated_user = {
@@ -59,10 +58,54 @@ const removeSocket = socket_id => {
     users = clone_users;
   }
 };
-
 export default server => {
   const io = socketIO(server);
 
+  let crnsp = io.of("/chatroom");
+
+  crnsp.on("connection", socket => {
+    console.log("USer connected-chat");
+    let query = socket.request._query,
+      user = {
+        chatroom: query.chatroom,
+        username: query.username,
+        uid: query.uid,
+        socket_id: socket.id
+      };
+
+    socket.join(query.chatroom);
+    // crnsp.to(query.chatroom).emit("message", user);
+
+    if (users[user.uid] !== undefined) {
+      createSocket(user);
+      crnsp.to(query.chatroom).emit("updateUsersList", getUsers());
+    } else {
+      createUser(user);
+      crnsp.emit("updateUsersList", getUsers());
+    }
+
+    socket.on("message", data => {
+      crnsp.to(query.chatroom).emit("message", {
+        username: data.username,
+        message: data.message,
+        uid: data.uid
+      });
+    });
+
+    // socket.on("message", data => {
+    //   console.log("mes", data);
+    //   crnsp.to(query.chatroom).emit("message", { username: "this really me" });
+    // });
+
+    // +++--(on disconnect /chatroom)
+    socket.on("disconnect", () => {
+      console.log("USer  disconect---chat");
+      // removeSocket(socket.id);
+      // io.emit("updateUsersList", getUsers());
+    });
+  });
+
+  // Default linsenter on "/"
   io.on("connection", socket => {
     let query = socket.request._query,
       user = {
@@ -87,7 +130,7 @@ export default server => {
     });
 
     socket.on("disconnect", () => {
-      console.log("USer  disconect");
+      console.log("USer  disconect in home");
       removeSocket(socket.id);
       io.emit("updateUsersList", getUsers());
     });

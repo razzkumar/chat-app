@@ -2,26 +2,31 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../reduxStore/actions";
 import User from "./User";
-import Message from "./Message";
-class AuthLanding extends Component {
+import ChatSection from "./ChatSection";
+class Chatroom extends Component {
   componentDidMount = () => {
-    let id = this.props.match.params && this.props.match.params.id;
-    this.props.getChatroomMember(id);
+    let chatroomid = this.props.match.params && this.props.match.params.id;
+    this.props.getChatroomMember(chatroomid);
+    this.props.getChatroomMessages(chatroomid);
   };
 
   render() {
-    let { profile, members } = this.props;
-    console.log("Memebtssss====", members);
+    let chatroomid = this.props.match.params && this.props.match.params.id;
+    let { profile, members, messages } = this.props;
     return (
       <div className="container">
         <div className="row mt-4 chat-container">
           <div className="col-sm-3">
             <User user={members} you={profile && profile.userName} />
           </div>
-          <div className="col-sm-9">
-            <Message user={profile && profile.userName} />
-            {/* <Chat socket={socket} profile={profile} /> */}
-          </div>
+          {profile && members && chatroomid && (
+            <ChatSection
+              profile={profile}
+              oldMessages={messages}
+              members={members}
+              chatroomid={chatroomid}
+            />
+          )}
         </div>
       </div>
     );
@@ -30,10 +35,11 @@ class AuthLanding extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   profile: state.getProfileReducer,
-  members: state.getChatroomsMembers
+  members: state.getMembers,
+  messages: state.getMessage
 });
 
 export default connect(
   mapStateToProps,
   actions
-)(AuthLanding);
+)(Chatroom);

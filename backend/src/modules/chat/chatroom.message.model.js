@@ -16,13 +16,4 @@ const ChatRoomMessageSchema = new Schema({
     default: Date.now()
   }
 });
-
-ChatRoomMessageSchema.methods = {
-  toChatrooms() {
-    return {
-      id: this._id,
-      chatroom: this.chatroom
-    };
-  }
-};
 export default mongoose.model("Chatroommessage", ChatRoomMessageSchema);
