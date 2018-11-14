@@ -66,3 +66,9 @@
 .room > a:hover {
   text-decoration: none;
 }
+
+.message-container {
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}

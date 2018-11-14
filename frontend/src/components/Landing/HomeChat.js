@@ -8,7 +8,7 @@ import Message from "./Message";
 import Chat from "./Chat";
 import * as actions from "../../reduxStore/actions";
 const C = constants();
-class AuthLanding extends Component {
+class HomeChat extends Component {
   state = {
     socket: "",
     messages: []
@@ -45,7 +45,9 @@ class AuthLanding extends Component {
             <User user={users} you={profile && profile.userName} />
           </div>
           <div className="col-sm-9">
-            <Message message={messages} user={profile && profile.userName} />
+            <div className="message-container">
+              <Message message={messages} user={profile && profile.userName} />
+            </div>
             <Chat socket={socket} profile={profile} />
           </div>
         </div>
@@ -62,4 +64,4 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(
   mapStateToProps,
   actions
-)(AuthLanding);
+)(HomeChat);

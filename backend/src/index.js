@@ -6,7 +6,7 @@ import "./config/database";
 import middlewareConfig from "./config/middleware";
 import SocketIO from "./socket";
 import userRoutes from "./modules";
-
+import path from "path";
 const app = express();
 
 const server = http.createServer(app);
@@ -15,9 +15,18 @@ middlewareConfig(app);
 
 SocketIO(server);
 
-app.get("/", (req, res) => {
-  res.send("Hell bro");
-});
+if (process.env.NODE_ENV === "development") {
+  app.get("/", (req, res) => {
+    res.send("Hell bro");
+  });
+}
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "public")));
+  app.get("*", (req, res) => {
+    const dir = path.resolve(__dirname, "public", "index.html");
+    res.sendFile(dir);
+  });
+}
 
 userRoutes(app);
 

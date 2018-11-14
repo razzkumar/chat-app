@@ -1,13 +1,12 @@
-import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import compression from 'compression';
-import helmet from 'helmet';
-import passport from 'passport';
-import fixCORS from './custom.middleware';
+import bodyParser from "body-parser";
+import compression from "compression";
+import helmet from "helmet";
+import passport from "passport";
+import fixCORS from "./custom.middleware";
 // import { isPrimitive } from 'util';
 
-const isDev = process.env.NODE_ENV === 'development';
-const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === "development";
+const isProd = process.env.NODE_ENV === "production";
 
 export default app => {
   if (isProd) {
@@ -20,10 +19,11 @@ export default app => {
 
   app.use(fixCORS);
 
-  // For login 
+  // For login
   app.use(passport.initialize());
 
   if (isDev) {
-    app.use(morgan('dev'));
+    import morgan from "morgan";
+    app.use(morgan("dev"));
   }
-}
+};

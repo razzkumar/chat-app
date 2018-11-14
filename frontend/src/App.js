@@ -9,7 +9,6 @@ import AddFriend from "./components/AddFrined";
 import PrivateRoute from "./components/common/PrivateRoute";
 import CreateChatRoom from "./components/chatroom/CreateChatRoom";
 import Chatroom from "./components/chatroom";
-import Home from "./components/Landing/Home";
 
 class App extends Component {
   render() {
@@ -27,7 +26,6 @@ class App extends Component {
             component={CreateChatRoom}
           />
           <PrivateRoute exact path="/chatroom/:id" component={Chatroom} />
-          <PrivateRoute exact path="/home" component={Home} />
         </Switch>
       </Fragment>
     );

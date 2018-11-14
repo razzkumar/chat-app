@@ -9,7 +9,7 @@ const testConfig = {
 };
 
 const prodConfig = {
-  MONGO_URL: "mongodb://localhost/chatter-prod",
+  MONGO_URL: "mongodb://localhost/chatter-dev",
   JWT_SECRET: "Thisisthesecretkey"
 };
 
