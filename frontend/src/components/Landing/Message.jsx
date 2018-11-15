@@ -1,7 +1,6 @@
 import React from "react";
 
 export default ({ message, user, allMessage }) => {
-  console.log("messsage", allMessage);
   return (
     <React.Fragment>
       {allMessage &&

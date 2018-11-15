@@ -43,16 +43,9 @@ class AuthLanding extends Component {
     let messages = document.getElementsByClassName("chat-container")[0];
 
     messages.scrollTop = messages.scrollHeight - messages.clientHeight;
-    console.log(
-      "YEBA",
-      messages.scrollHeight,
-      messages.clientHeight,
-      messages.scrollTop
-    );
   }
   render() {
     let { profile, users, allUser, allMessage } = this.props;
-    console.log("al", allUser);
     const { socket, messages } = this.state;
     return (
       <div className="container">

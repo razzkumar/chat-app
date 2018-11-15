@@ -1,5 +1,5 @@
 const devConfig = {
-  MONGO_URL: "mongodb://localhost/chatter-dev",
+  MONGO_URL: "mongodb://localhost/chatter",
   JWT_SECRET: "Thisisthesecretkey"
 };
 

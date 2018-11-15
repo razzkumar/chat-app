@@ -13,7 +13,11 @@ export async function getUsers(req, res, next) {
 }
 
 export async function getMessage(req, res, next) {
-  const ms = await Message.find({}, "-__v").populate("sender", "userName");
+  const ms = await Message.find({}, "-__v")
+    .sort({ _id: -1 })
+    .limit(20)
+    .populate("sender", "userName");
+
   if (ms) {
     res.status(200).json(ms);
   } else {
