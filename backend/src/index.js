@@ -20,6 +20,8 @@ if (process.env.NODE_ENV === "development") {
     res.send("Hell bro");
   });
 }
+userRoutes(app);
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.resolve(__dirname, "public")));
   app.get("*", (req, res) => {
@@ -27,8 +29,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(dir);
   });
 }
-
-userRoutes(app);
 
 server.listen(constants.PORT, err => {
   if (err) {

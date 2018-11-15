@@ -1,64 +1,21 @@
-import Chatroom from "./chatroom.model";
-import ChatroomMessaage from "./chatroom.message.model";
-export async function createChatroom(req, res) {
-  try {
-    const oldChatroom = await Chatroom.find({ chatroom: req.body.chatroom });
+import User from "../users/user.model";
+import Message from "./message.model";
 
-    if (oldChatroom && oldChatroom.length > 0) {
-      res.status(200).json({ message: "chatroom exitst" });
-    } else {
-      const chatroom = await Chatroom.create(req.body);
-      if (chatroom) {
-        chatroom.member.push(req.user._id);
-        let addmember = await chatroom.save();
-        if (addmember) {
-          return res.status(200).json(addmember.toAuthJSON());
-        } else {
-          return res.status(500);
-        }
-      } else {
-        return res.status(500);
-      }
-    }
-  } catch (e) {
-    return res.status(500).json(e);
-  }
-}
+export async function getUsers(req, res, next) {
+  const user = await User.find({}, "userName");
 
-export async function getChatrooms(req, res, next) {
-  const chatrooms = await Chatroom.find({}, "chatroom _id");
-  if (chatrooms) {
-    res.status(200).json(chatrooms);
+  if (user) {
+    res.status(200).json(user);
   } else {
     res.status(400);
   }
   next();
 }
-export async function getChatroomsMembers(req, res, next) {
-  const chatroomMembers = await Chatroom.findById(
-    req.params.id,
-    "members -_id"
-  ).populate("members", "userName _id");
-  if (chatroomMembers) {
-    res.status(200).json(chatroomMembers.members);
-  } else {
-    res.status(400);
-  }
-  next();
-}
-export async function getChatroomsMessage(req, res, next) {
-  const ms = await Chatroom.findById(req.params.id, "messages id").populate({
-    path: "messages",
-    model: "Chatroommessage",
-    select: "-__v",
-    populate: {
-      path: "sender",
-      model: "User",
-      select: "userName -_id"
-    }
-  });
+
+export async function getMessage(req, res, next) {
+  const ms = await Message.find({}, "-__v").populate("sender", "userName");
   if (ms) {
-    res.status(200).json(ms.messages);
+    res.status(200).json(ms);
   } else {
     res.status(400);
   }

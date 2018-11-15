@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run start --prefix ./backend\" \"npm run start --prefix ./frontend\"",
     "build": "concurrently  \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\" && npm run sync --prefix ./backend",
-    "prepare-server": "ssh ",
-    "deploy": "npm run deploy --prefix ./backend "
+    "deploy:root": "npm run deploy --prefix ./backend ",
+    "prod": "npm run prod --prefix ./backend"
   },
   "repository": {
     "type": "git",

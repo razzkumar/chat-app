@@ -7,9 +7,6 @@ import Landing from "./components/Landing";
 import Nav from "./components/common/Nav";
 import AddFriend from "./components/AddFrined";
 import PrivateRoute from "./components/common/PrivateRoute";
-import CreateChatRoom from "./components/chatroom/CreateChatRoom";
-import Chatroom from "./components/chatroom";
-
 class App extends Component {
   render() {
     return (
@@ -20,12 +17,6 @@ class App extends Component {
           <Route exact path="/register/:error?" component={Register} />
           <Route exact path="/" component={Landing} />
           <PrivateRoute exact path="/add-friend" component={AddFriend} />
-          <PrivateRoute
-            exact
-            path="/create-chatroom/:error?"
-            component={CreateChatRoom}
-          />
-          <PrivateRoute exact path="/chatroom/:id" component={Chatroom} />
         </Switch>
       </Fragment>
     );

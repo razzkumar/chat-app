@@ -1,5 +1,6 @@
 import socketIO from "socket.io";
 // import User from "./users";
+import Message from "../modules/chat/message.model";
 
 let users = {};
 
@@ -40,6 +41,7 @@ const removeSocket = socket_id => {
     }
   });
   let user = users[uid];
+
   if (user.sockets.length > 1) {
     // Remove socket only
     let index = user.sockets.indexOf(socket_id);
@@ -58,6 +60,7 @@ const removeSocket = socket_id => {
     users = clone_users;
   }
 };
+
 export default server => {
   const io = socketIO(server);
 
@@ -77,7 +80,16 @@ export default server => {
       createUser(user);
       io.emit("updateUsersList", getUsers());
     }
-    socket.on("message", data => {
+    socket.on("message", async data => {
+      let message = new Message({
+        message: data.message,
+        sender: data.uid
+      });
+
+      let msg = await message.save();
+      if (!msg) {
+        return;
+      }
       io.sockets.emit("message", {
         username: data.username,
         message: data.message,

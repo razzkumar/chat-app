@@ -95,7 +95,19 @@ module.exports =
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nconst devConfig = {\n  MONGO_URL: \"mongodb://localhost/chatter-dev\",\n  JWT_SECRET: \"Thisisthesecretkey\"\n};\n\nconst testConfig = {\n  MONGO_URL: \"mongodb://localhost/chatter-test\",\n  JWT_SECRET: \"Thisisthesecretkey\"\n};\n\nconst prodConfig = {\n  MONGO_URL: \"mongodb://localhost/chatter-dev\",\n  JWT_SECRET: \"Thisisthesecretkey\"\n};\n\nconst defaultConfig = {\n  PORT: process.env.PORT || 4000\n};\n\nfunction envConfig(env) {\n  switch (env) {\n    case \"development\":\n      return devConfig;\n    case \"test\":\n      return testConfig;\n    default:\n      return prodConfig;\n  }\n}\n\nexports.default = Object.assign({}, defaultConfig, envConfig(\"development\"));\n\n//# sourceURL=webpack:///./src/config/constants.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nconst devConfig = {\n  MONGO_URL: \"mongodb://localhost/chatter-dev\",\n  JWT_SECRET: \"Thisisthesecretkey\"\n};\n\nconst testConfig = {\n  MONGO_URL: \"mongodb://localhost/chatter-test\",\n  JWT_SECRET: \"Thisisthesecretkey\"\n};\n\nconst prodConfig = {\n  MONGO_URL: \"mongodb://localhost/chatter\",\n  JWT_SECRET: \"Thisisthesecretkey\"\n};\n\nconst defaultConfig = {\n  PORT: process.env.PORT || 4000\n};\n\nfunction envConfig(env) {\n  switch (env) {\n    case \"development\":\n      return devConfig;\n    case \"test\":\n      return testConfig;\n    default:\n      return prodConfig;\n  }\n}\n\nexports.default = Object.assign({}, defaultConfig, envConfig(\"development\"));\n\n//# sourceURL=webpack:///./src/config/constants.js?");
+
+/***/ }),
+
+/***/ "./src/config/custom.middleware.js":
+/*!*****************************************!*\
+  !*** ./src/config/custom.middleware.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = fixCORS;\nfunction fixCORS(req, res, next) {\n  res.header(\"Access-Control-Allow-Origin\", \"*\");\n  req.header(\"Access-Control-Allow-Headers\", \"Origin,X-Requested-Width,Content-Type,Accept,Authorization\");\n  if (req.method === 'OPTIONS') {\n    req.header('Access-Control-Allow-Methods', \"PUT,PATCH,POST,DELETE,GET\");\n    return res.status(200).json({});\n  }\n  next();\n}\n\n//# sourceURL=webpack:///./src/config/custom.middleware.js?");
 
 /***/ }),
 
@@ -116,9 +128,10 @@ eval("\n\nvar _mongoose = __webpack_require__(/*! mongoose */ \"mongoose\");\n\n
   !*** ./src/config/middleware.js ***!
   \**********************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("throw new Error(\"Module build failed (from ./node_modules/babel-loader/lib/index.js):\\nSyntaxError: 'import' and 'export' may only appear at the top level (26:4)\\n\\n\\u001b[0m \\u001b[90m 24 | \\u001b[39m\\n \\u001b[90m 25 | \\u001b[39m  \\u001b[36mif\\u001b[39m (isDev) {\\n\\u001b[31m\\u001b[1m>\\u001b[22m\\u001b[39m\\u001b[90m 26 | \\u001b[39m    \\u001b[36mimport\\u001b[39m morgan from \\u001b[32m\\\"morgan\\\"\\u001b[39m\\u001b[33m;\\u001b[39m\\n \\u001b[90m    | \\u001b[39m    \\u001b[31m\\u001b[1m^\\u001b[22m\\u001b[39m\\n \\u001b[90m 27 | \\u001b[39m    app\\u001b[33m.\\u001b[39muse(morgan(\\u001b[32m\\\"dev\\\"\\u001b[39m))\\u001b[33m;\\u001b[39m\\n \\u001b[90m 28 | \\u001b[39m  }\\n \\u001b[90m 29 | \\u001b[39m}\\u001b[33m;\\u001b[39m\\u001b[0m\\n\");\n\n//# sourceURL=webpack:///./src/config/middleware.js?");
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _bodyParser = __webpack_require__(/*! body-parser */ \"body-parser\");\n\nvar _bodyParser2 = _interopRequireDefault(_bodyParser);\n\nvar _compression = __webpack_require__(/*! compression */ \"compression\");\n\nvar _compression2 = _interopRequireDefault(_compression);\n\nvar _helmet = __webpack_require__(/*! helmet */ \"helmet\");\n\nvar _helmet2 = _interopRequireDefault(_helmet);\n\nvar _passport = __webpack_require__(/*! passport */ \"passport\");\n\nvar _passport2 = _interopRequireDefault(_passport);\n\nvar _custom = __webpack_require__(/*! ./custom.middleware */ \"./src/config/custom.middleware.js\");\n\nvar _custom2 = _interopRequireDefault(_custom);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// import { isPrimitive } from 'util';\n\nconst isDev = \"development\" === \"development\";\nconst isProd = \"development\" === \"production\";\n\nexports.default = app => {\n  if (isProd) {\n    app.use((0, _compression2.default)());\n    app.use((0, _helmet2.default)());\n  }\n  // body parser to take user input from the front end as json\n  app.use(_bodyParser2.default.json());\n  app.use(_bodyParser2.default.urlencoded({ extended: true }));\n\n  app.use(_custom2.default);\n\n  // For login\n  app.use(_passport2.default.initialize());\n\n  if (isDev) {\n    const morgan = __webpack_require__(/*! morgan */ \"morgan\");\n    app.use(morgan(\"dev\"));\n  }\n};\n\n//# sourceURL=webpack:///./src/config/middleware.js?");
 
 /***/ }),
 
@@ -130,7 +143,7 @@ eval("throw new Error(\"Module build failed (from ./node_modules/babel-loader/li
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nvar _express = __webpack_require__(/*! express */ \"express\");\n\nvar _express2 = _interopRequireDefault(_express);\n\nvar _http = __webpack_require__(/*! http */ \"http\");\n\nvar _http2 = _interopRequireDefault(_http);\n\nvar _constants = __webpack_require__(/*! ./config/constants */ \"./src/config/constants.js\");\n\nvar _constants2 = _interopRequireDefault(_constants);\n\n__webpack_require__(/*! ./config/database */ \"./src/config/database.js\");\n\nvar _middleware = __webpack_require__(/*! ./config/middleware */ \"./src/config/middleware.js\");\n\nvar _middleware2 = _interopRequireDefault(_middleware);\n\nvar _socket = __webpack_require__(/*! ./socket */ \"./src/socket/index.js\");\n\nvar _socket2 = _interopRequireDefault(_socket);\n\nvar _modules = __webpack_require__(/*! ./modules */ \"./src/modules/index.js\");\n\nvar _modules2 = _interopRequireDefault(_modules);\n\nvar _path = __webpack_require__(/*! path */ \"path\");\n\nvar _path2 = _interopRequireDefault(_path);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconst app = (0, _express2.default)();\n\nconst server = _http2.default.createServer(app);\n\n(0, _middleware2.default)(app);\n\n(0, _socket2.default)(server);\n\nif (true) {\n  app.get(\"/\", (req, res) => {\n    res.send(\"Hell bro\");\n  });\n}\nif (false) {}\n\n(0, _modules2.default)(app);\n\nserver.listen(_constants2.default.PORT, err => {\n  if (err) {\n    throw err;\n  } else {\n    console.log(`\n            Server is running on port: ${_constants2.default.PORT}\n\n            ----Running on ${\"development\"}\n            \n            ----Make something great!`);\n  }\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("\n\nvar _express = __webpack_require__(/*! express */ \"express\");\n\nvar _express2 = _interopRequireDefault(_express);\n\nvar _http = __webpack_require__(/*! http */ \"http\");\n\nvar _http2 = _interopRequireDefault(_http);\n\nvar _constants = __webpack_require__(/*! ./config/constants */ \"./src/config/constants.js\");\n\nvar _constants2 = _interopRequireDefault(_constants);\n\n__webpack_require__(/*! ./config/database */ \"./src/config/database.js\");\n\nvar _middleware = __webpack_require__(/*! ./config/middleware */ \"./src/config/middleware.js\");\n\nvar _middleware2 = _interopRequireDefault(_middleware);\n\nvar _socket = __webpack_require__(/*! ./socket */ \"./src/socket/index.js\");\n\nvar _socket2 = _interopRequireDefault(_socket);\n\nvar _modules = __webpack_require__(/*! ./modules */ \"./src/modules/index.js\");\n\nvar _modules2 = _interopRequireDefault(_modules);\n\nvar _path = __webpack_require__(/*! path */ \"path\");\n\nvar _path2 = _interopRequireDefault(_path);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconst app = (0, _express2.default)();\n\nconst server = _http2.default.createServer(app);\n\n(0, _middleware2.default)(app);\n\n(0, _socket2.default)(server);\n\nif (true) {\n  app.get(\"/\", (req, res) => {\n    res.send(\"Hell bro\");\n  });\n}\n(0, _modules2.default)(app);\n\nif (false) {}\n\nserver.listen(_constants2.default.PORT, err => {\n  if (err) {\n    throw err;\n  } else {\n    console.log(`\n            Server is running on port: ${_constants2.default.PORT}\n\n            ----Running on ${\"development\"}\n            \n            ----Make something great!`);\n  }\n});\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -142,7 +155,7 @@ eval("\n\nvar _express = __webpack_require__(/*! express */ \"express\");\n\nvar
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.createChatroom = createChatroom;\nexports.getChatrooms = getChatrooms;\nexports.getChatroomsMembers = getChatroomsMembers;\nexports.getChatroomsMessage = getChatroomsMessage;\n\nvar _chatroom = __webpack_require__(/*! ./chatroom.model */ \"./src/modules/chat/chatroom.model.js\");\n\nvar _chatroom2 = _interopRequireDefault(_chatroom);\n\nvar _chatroomMessage = __webpack_require__(/*! ./chatroom.message.model */ \"./src/modules/chat/chatroom.message.model.js\");\n\nvar _chatroomMessage2 = _interopRequireDefault(_chatroomMessage);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nasync function createChatroom(req, res) {\n  try {\n    const oldChatroom = await _chatroom2.default.find({ chatroom: req.body.chatroom });\n\n    if (oldChatroom && oldChatroom.length > 0) {\n      res.status(200).json({ message: \"chatroom exitst\" });\n    } else {\n      const chatroom = await _chatroom2.default.create(req.body);\n      if (chatroom) {\n        chatroom.member.push(req.user._id);\n        let addmember = await chatroom.save();\n        if (addmember) {\n          return res.status(200).json(addmember.toAuthJSON());\n        } else {\n          return res.status(500);\n        }\n      } else {\n        return res.status(500);\n      }\n    }\n  } catch (e) {\n    return res.status(500).json(e);\n  }\n}\n\nasync function getChatrooms(req, res, next) {\n  const chatrooms = await _chatroom2.default.find({}, \"chatroom _id\");\n  if (chatrooms) {\n    res.status(200).json(chatrooms);\n  } else {\n    res.status(400);\n  }\n  next();\n}\nasync function getChatroomsMembers(req, res, next) {\n  const chatroomMembers = await _chatroom2.default.findById(req.params.id, \"members -_id\").populate(\"members\", \"userName _id\");\n  if (chatroomMembers) {\n    res.status(200).json(chatroomMembers.members);\n  } else {\n    res.status(400);\n  }\n  next();\n}\nasync function getChatroomsMessage(req, res, next) {\n  const ms = await _chatroom2.default.findById(req.params.id, \"messages id\").populate({\n    path: \"messages\",\n    model: \"Chatroommessage\",\n    select: \"-__v\",\n    populate: {\n      path: \"sender\",\n      model: \"User\",\n      select: \"userName -_id\"\n    }\n  });\n  if (ms) {\n    res.status(200).json(ms.messages);\n  } else {\n    res.status(400);\n  }\n  next();\n}\n\n//# sourceURL=webpack:///./src/modules/chat/chat.controllers.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.getUsers = getUsers;\nexports.getMessage = getMessage;\n\nvar _user = __webpack_require__(/*! ../users/user.model */ \"./src/modules/users/user.model.js\");\n\nvar _user2 = _interopRequireDefault(_user);\n\nvar _message = __webpack_require__(/*! ./message.model */ \"./src/modules/chat/message.model.js\");\n\nvar _message2 = _interopRequireDefault(_message);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nasync function getUsers(req, res, next) {\n  const user = await _user2.default.find({}, \"userName\");\n\n  if (user) {\n    res.status(200).json(user);\n  } else {\n    res.status(400);\n  }\n  next();\n}\n\nasync function getMessage(req, res, next) {\n  const ms = await _message2.default.find({}, \"-__v\").populate(\"sender\", \"userName\");\n  if (ms) {\n    res.status(200).json(ms);\n  } else {\n    res.status(400);\n  }\n  next();\n}\n\n//# sourceURL=webpack:///./src/modules/chat/chat.controllers.js?");
 
 /***/ }),
 
@@ -154,31 +167,19 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _express = __webpack_require__(/*! express */ \"express\");\n\nvar _chat = __webpack_require__(/*! ./chat.controllers */ \"./src/modules/chat/chat.controllers.js\");\n\nvar chatController = _interopRequireWildcard(_chat);\n\nvar _auth = __webpack_require__(/*! ../../services/auth/auth.services */ \"./src/services/auth/auth.services.js\");\n\nfunction _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }\n\nconst routes = new _express.Router();\n\nroutes.post(\"/create-chatroom\", _auth.authJwt, chatController.createChatroom);\nroutes.get(\"/chatrooms\", _auth.authJwt, chatController.getChatrooms);\nroutes.get(\"/members/:id\", _auth.authJwt, chatController.getChatroomsMembers);\nroutes.get(\"/messages/:id\", _auth.authJwt, chatController.getChatroomsMessage);\n\nexports.default = routes;\n\n//# sourceURL=webpack:///./src/modules/chat/chat.routes.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _express = __webpack_require__(/*! express */ \"express\");\n\nvar _chat = __webpack_require__(/*! ./chat.controllers */ \"./src/modules/chat/chat.controllers.js\");\n\nvar chatController = _interopRequireWildcard(_chat);\n\nvar _auth = __webpack_require__(/*! ../../services/auth/auth.services */ \"./src/services/auth/auth.services.js\");\n\nfunction _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }\n\nconst routes = new _express.Router();\n\nroutes.get(\"/members\", _auth.authJwt, chatController.getUsers);\nroutes.get(\"/messages\", _auth.authJwt, chatController.getMessage);\n\nexports.default = routes;\n\n//# sourceURL=webpack:///./src/modules/chat/chat.routes.js?");
 
 /***/ }),
 
-/***/ "./src/modules/chat/chatroom.message.model.js":
-/*!****************************************************!*\
-  !*** ./src/modules/chat/chatroom.message.model.js ***!
-  \****************************************************/
+/***/ "./src/modules/chat/message.model.js":
+/*!*******************************************!*\
+  !*** ./src/modules/chat/message.model.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _mongoose = __webpack_require__(/*! mongoose */ \"mongoose\");\n\nvar _mongoose2 = _interopRequireDefault(_mongoose);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconst ChatRoomMessageSchema = new _mongoose.Schema({\n  message: {\n    type: String,\n    required: true,\n    trim: true\n  },\n  sender: {\n    type: _mongoose.Schema.Types.ObjectId,\n    ref: \"User\",\n    required: true\n  },\n  timestamp: {\n    type: Date,\n    required: true,\n    default: Date.now()\n  }\n});\nexports.default = _mongoose2.default.model(\"Chatroommessage\", ChatRoomMessageSchema);\n\n//# sourceURL=webpack:///./src/modules/chat/chatroom.message.model.js?");
-
-/***/ }),
-
-/***/ "./src/modules/chat/chatroom.model.js":
-/*!********************************************!*\
-  !*** ./src/modules/chat/chatroom.model.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _mongoose = __webpack_require__(/*! mongoose */ \"mongoose\");\n\nvar _mongoose2 = _interopRequireDefault(_mongoose);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconst ChatroomSchema = new _mongoose.Schema({\n  chatroom: {\n    type: String,\n    required: true,\n    trim: true\n  },\n  members: [{\n    type: _mongoose.Schema.Types.ObjectId,\n    ref: \"User\",\n    required: true\n  }],\n  timestamp: {\n    type: Date,\n    required: true,\n    default: Date.now()\n  },\n  createdBy: {\n    type: _mongoose.Schema.Types.ObjectId,\n    ref: \"User\",\n    required: true\n  },\n  messages: [{\n    type: _mongoose.Schema.Types.ObjectId,\n    ref: \"Chatroommessage\",\n    required: true\n  }]\n});\n\nChatroomSchema.methods = {\n  toAuthJSON() {\n    return {\n      id: this._id,\n      member: this.member,\n      createdBy: this.createdBy,\n      chatroom: this.chatroom\n    };\n  }\n};\nexports.default = _mongoose2.default.model(\"Chatroom\", ChatroomSchema);\n\n//# sourceURL=webpack:///./src/modules/chat/chatroom.model.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _mongoose = __webpack_require__(/*! mongoose */ \"mongoose\");\n\nvar _mongoose2 = _interopRequireDefault(_mongoose);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nconst MessageSchema = new _mongoose.Schema({\n  message: {\n    type: String,\n    required: true,\n    trim: true\n  },\n  sender: {\n    type: _mongoose.Schema.Types.ObjectId,\n    ref: \"User\",\n    required: true\n  },\n  timestamp: {\n    type: Date,\n    required: true,\n    default: Date.now()\n  }\n});\n\nexports.default = _mongoose2.default.model(\"Message\", MessageSchema);\n\n//# sourceURL=webpack:///./src/modules/chat/message.model.js?");
 
 /***/ }),
 
@@ -262,7 +263,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _socket = __webpack_require__(/*! socket.io */ \"socket.io\");\n\nvar _socket2 = _interopRequireDefault(_socket);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// import User from \"./users\";\n\nlet users = {};\n\nconst getUsers = () => {\n  return Object.keys(users).map(function (key) {\n    return users[key].username;\n  });\n};\nconst createSocket = user => {\n  let cur_user = users[user.uid],\n      updated_user = {\n    [user.uid]: Object.assign(cur_user, {\n      sockets: [...cur_user.sockets, user.socket_id]\n    })\n  };\n  users = Object.assign(users, updated_user);\n};\n\nconst createUser = user => {\n  users = Object.assign({\n    [user.uid]: {\n      username: user.username,\n      uid: user.uid,\n      sockets: [user.socket_id]\n    }\n  }, users);\n};\n\nconst removeSocket = socket_id => {\n  let uid = \"\";\n  Object.keys(users).map(function (key) {\n    let sockets = users[key].sockets;\n    if (sockets.indexOf(socket_id) !== -1) {\n      uid = key;\n    }\n  });\n  let user = users[uid];\n  if (user.sockets.length > 1) {\n    // Remove socket only\n    let index = user.sockets.indexOf(socket_id);\n    let updated_user = {\n      [uid]: Object.assign(user, {\n        sockets: user.sockets.slice(0, index).concat(user.sockets.slice(index + 1))\n      })\n    };\n    users = Object.assign(users, updated_user);\n  } else {\n    // Remove user by key\n    let clone_users = Object.assign({}, users);\n    delete clone_users[uid];\n    users = clone_users;\n  }\n};\n\nexports.default = server => {\n  const io = (0, _socket2.default)(server);\n\n  // Default linsenter on \"/\"\n  io.on(\"connection\", socket => {\n    let query = socket.request._query,\n        user = {\n      username: query.username,\n      uid: query.uid,\n      socket_id: socket.id\n    };\n\n    if (users[user.uid] !== undefined) {\n      createSocket(user);\n      socket.emit(\"updateUsersList\", getUsers());\n    } else {\n      createUser(user);\n      io.emit(\"updateUsersList\", getUsers());\n    }\n    socket.on(\"message\", data => {\n      io.sockets.emit(\"message\", {\n        username: data.username,\n        message: data.message,\n        uid: data.uid\n      });\n    });\n\n    socket.on(\"disconnect\", () => {\n      console.log(\"USer  disconect in home\");\n      removeSocket(socket.id);\n      io.emit(\"updateUsersList\", getUsers());\n    });\n  });\n};\n\n//# sourceURL=webpack:///./src/socket/index.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _socket = __webpack_require__(/*! socket.io */ \"socket.io\");\n\nvar _socket2 = _interopRequireDefault(_socket);\n\nvar _message = __webpack_require__(/*! ../modules/chat/message.model */ \"./src/modules/chat/message.model.js\");\n\nvar _message2 = _interopRequireDefault(_message);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nlet users = {};\n// import User from \"./users\";\n\n\nconst getUsers = () => {\n  return Object.keys(users).map(function (key) {\n    return users[key].username;\n  });\n};\nconst createSocket = user => {\n  let cur_user = users[user.uid],\n      updated_user = {\n    [user.uid]: Object.assign(cur_user, {\n      sockets: [...cur_user.sockets, user.socket_id]\n    })\n  };\n  users = Object.assign(users, updated_user);\n};\n\nconst createUser = user => {\n  users = Object.assign({\n    [user.uid]: {\n      username: user.username,\n      uid: user.uid,\n      sockets: [user.socket_id]\n    }\n  }, users);\n};\n\nconst removeSocket = socket_id => {\n  let uid = \"\";\n  Object.keys(users).map(function (key) {\n    let sockets = users[key].sockets;\n    if (sockets.indexOf(socket_id) !== -1) {\n      uid = key;\n    }\n  });\n  let user = users[uid];\n\n  if (user.sockets.length > 1) {\n    // Remove socket only\n    let index = user.sockets.indexOf(socket_id);\n    let updated_user = {\n      [uid]: Object.assign(user, {\n        sockets: user.sockets.slice(0, index).concat(user.sockets.slice(index + 1))\n      })\n    };\n    users = Object.assign(users, updated_user);\n  } else {\n    // Remove user by key\n    let clone_users = Object.assign({}, users);\n    delete clone_users[uid];\n    users = clone_users;\n  }\n};\n\nexports.default = server => {\n  const io = (0, _socket2.default)(server);\n\n  // Default linsenter on \"/\"\n  io.on(\"connection\", socket => {\n    let query = socket.request._query,\n        user = {\n      username: query.username,\n      uid: query.uid,\n      socket_id: socket.id\n    };\n\n    if (users[user.uid] !== undefined) {\n      createSocket(user);\n      socket.emit(\"updateUsersList\", getUsers());\n    } else {\n      createUser(user);\n      io.emit(\"updateUsersList\", getUsers());\n    }\n    socket.on(\"message\", async data => {\n      let message = new _message2.default({\n        message: data.message,\n        sender: data.uid\n      });\n\n      let msg = await message.save();\n      if (!msg) {\n        return;\n      }\n      io.sockets.emit(\"message\", {\n        username: data.username,\n        message: data.message,\n        uid: data.uid\n      });\n    });\n\n    socket.on(\"disconnect\", () => {\n      console.log(\"USer  disconect in home\");\n      removeSocket(socket.id);\n      io.emit(\"updateUsersList\", getUsers());\n    });\n  });\n};\n\n//# sourceURL=webpack:///./src/socket/index.js?");
 
 /***/ }),
 
@@ -274,6 +275,28 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports) {
 
 eval("module.exports = require(\"bcrypt-nodejs\");\n\n//# sourceURL=webpack:///external_%22bcrypt-nodejs%22?");
+
+/***/ }),
+
+/***/ "body-parser":
+/*!******************************!*\
+  !*** external "body-parser" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"body-parser\");\n\n//# sourceURL=webpack:///external_%22body-parser%22?");
+
+/***/ }),
+
+/***/ "compression":
+/*!******************************!*\
+  !*** external "compression" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"compression\");\n\n//# sourceURL=webpack:///external_%22compression%22?");
 
 /***/ }),
 
@@ -296,6 +319,17 @@ eval("module.exports = require(\"express\");\n\n//# sourceURL=webpack:///externa
 /***/ (function(module, exports) {
 
 eval("module.exports = require(\"express-validation\");\n\n//# sourceURL=webpack:///external_%22express-validation%22?");
+
+/***/ }),
+
+/***/ "helmet":
+/*!*************************!*\
+  !*** external "helmet" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"helmet\");\n\n//# sourceURL=webpack:///external_%22helmet%22?");
 
 /***/ }),
 
@@ -340,6 +374,17 @@ eval("module.exports = require(\"jsonwebtoken\");\n\n//# sourceURL=webpack:///ex
 /***/ (function(module, exports) {
 
 eval("module.exports = require(\"mongoose\");\n\n//# sourceURL=webpack:///external_%22mongoose%22?");
+
+/***/ }),
+
+/***/ "morgan":
+/*!*************************!*\
+  !*** external "morgan" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"morgan\");\n\n//# sourceURL=webpack:///external_%22morgan%22?");
 
 /***/ }),
 

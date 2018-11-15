@@ -2,9 +2,8 @@ import axios from "axios";
 import {
   GET_PROFILE,
   GET_CONNECTED_USER,
-  GET_CHAT_ROOM,
-  GET_CHAT_ROOM_MEMBER,
-  GET_CHAT_ROOM_MESSAGE
+  GET_CHAT_MESSAGE,
+  GET_CHAT_MEMBER
 } from "../constants";
 import { authHeader } from "../../utils/helpers";
 
@@ -66,46 +65,11 @@ export const getUsers = payload => async dispatch => {
   payload && dispatch(data);
 };
 
-// =============CREATE CHAT-ROOM=============
-
-export const createChatRoom = (data, history) => async dispatch => {
+export const getMembers = () => async dispatch => {
   try {
-    const chatroom = await axios.post(
-      "/api/v1/chat/create-chatroom",
-      data,
-      authHeader
-    );
-    if (chatroom && chatroom.data && chatroom.data.chatroom) {
-      console.log("chatroom", chatroom.data);
-      history.push(`/chatroom/${chatroom.data.id}`);
-    } else if (chatroom && chatroom.data.message) {
-      history.push("/create-chatroom/error-chat-room-exist");
-    } else {
-      history.push("/create-chatroom/error");
-    }
-  } catch (e) {
-    if (e) {
-      history.push("/create-chatroom/error");
-    }
-  }
-};
-
-// ===========GET--CHATROOM================
-
-export const getChatrooms = () => async dispatch => {
-  try {
-    const chatrooms = await axios.get("/api/v1/chat/chatrooms", authHeader);
-    let disp = { type: GET_CHAT_ROOM, payload: chatrooms.data };
-    chatrooms && chatrooms.data && dispatch(disp);
-  } catch (err) {
-    console.log("ERROR", err);
-  }
-};
-export const getChatroomMember = id => async dispatch => {
-  try {
-    const members = await axios.get(`/api/v1/chat/members/${id}`, authHeader);
+    const members = await axios.get(`/api/v1/chat/members`, authHeader);
     if (members) {
-      let disp = { type: GET_CHAT_ROOM_MEMBER, payload: members.data };
+      let disp = { type: GET_CHAT_MEMBER, payload: members.data };
       members && members.data && dispatch(disp);
     } else {
       console.log("ERROR ");
@@ -114,11 +78,11 @@ export const getChatroomMember = id => async dispatch => {
     console.log("ERROR", err);
   }
 };
-export const getChatroomMessages = id => async dispatch => {
+export const getMessages = () => async dispatch => {
   try {
-    const message = await axios.get(`/api/v1/chat/messages/${id}`, authHeader);
+    const message = await axios.get("/api/v1/chat/messages", authHeader);
     if (message) {
-      let disp = { type: GET_CHAT_ROOM_MESSAGE, payload: message.data };
+      let disp = { type: GET_CHAT_MESSAGE, payload: message.data };
       message && message.data && dispatch(disp);
     } else {
       console.log("ERROR ");

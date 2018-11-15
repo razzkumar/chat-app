@@ -55,9 +55,6 @@
   color: green;
 }
 
-.chatroom-container {
-}
-
 .room > a {
   color: #000;
   text-decoration: none;
@@ -71,4 +68,15 @@
   height: 70vh;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+.online > i {
+  color: red;
+}
+.offline {
+  color: rgba(0, 0, 0, 0.7);
+}
+.chat-container {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 70vh;
 }

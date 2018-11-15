@@ -9,8 +9,9 @@
     "dev:build": "webpack -w --mode=development",
     "build": "webpack --mode=production",
     "dev": "cross-env NODE_ENV=development nodemon  dist/index.bundle.js",
+    "prod": "nodemon  dist/index.bundle.js",
     "sync": "rsync -avP ./dist/ yarn.lock package.json  ../../final-chat-app",
-    "deploy": "rsync -avP ./dist/ yarn.lock package.json deploy@139.59.90.32:/var/www/html/chat-app/",
+    "deploy": "rsync -avP ./dist/ yarn.lock package.json root@206.189.234.105:/var/www/http/chat-app",
     "start": "yarn && concurrently \"yarn run dev:build\" \"yarn run dev\""
   },
   "dependencies": {
