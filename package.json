@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"npm run start --prefix ./backend\" \"npm run start --prefix ./frontend\"",
-    "build": "concurrently  \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\" && npm run sync --prefix ./backend"
+    "build": "concurrently  \"npm run build --prefix ./frontend\" \"npm run build --prefix ./backend\" && npm run sync --prefix ./backend",
+    "deploy": "rsync -avP final/ deploy@139.59.90.32:/var/www/html/chat-app"
   },
   "repository": {
     "type": "git",

@@ -15,21 +15,20 @@ middlewareConfig(app);
 
 SocketIO(server);
 
-app.get("/", (req, res) => {
-  res.send("Hell bro");
-});
 
 userRoutes(app);
 
+app.use('*', express.static('public'))
+
 server.listen(constants.PORT, err => {
-  if (err) {
-    throw err;
-  } else {
-    console.log(`
+    if (err) {
+        throw err;
+    } else {
+        console.log(`
             Server is running on port: ${constants.PORT}
 
             ----Running on ${process.env.NODE_ENV}
             
             ----Make something great!`);
-  }
+    }
 });

@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
 import { connect } from "react-redux";
 
-import constants from "../../utils/constants";
+import * as C from "../../utils/constants";
 import User from "./User";
 import Message from "./Message";
 import Chat from "./Chat";
 import * as actions from "../../reduxStore/actions";
-const C = constants();
 class AuthLanding extends Component {
   state = {
     socket: "",
@@ -18,7 +17,7 @@ class AuthLanding extends Component {
     let { profile } = this.props;
     const { userName, id } = profile && profile;
     if (profile) {
-      const socket = socketIOClient(C.host, {
+      const socket = socketIOClient(C.chatroomhost, {
         query: "username=" + userName + "&uid=" + id
       });
       socket.on("message", data => {

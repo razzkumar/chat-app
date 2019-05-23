@@ -16,27 +16,27 @@ class Landing extends Component {
         {auth && profile ? (
           <AuthLanding profile={profile} />
         ) : (
-          <Fragment>
-            <img src={bg} alt="bg" />
-            <div className="overlay">
-              <div className="text">
-                <h1>ChaTTer</h1>
-                <div>Connet easily</div>
-                <NavLink
-                  to={auth ? "/pay/" : "/register"}
-                  className="border btn text-white mt-3"
-                >
-                  {auth ? "pay" : "Sign Up for Free"}
-                </NavLink>
-                <div className="d-block d-lg-none">
-                  <NavLink className="btn border mt-3 text-white" to="/login">
-                    Login
+            <Fragment>
+              <img src={bg} alt="bg" />
+              <div className="overlay">
+                <div className="text">
+                  <h1>Live Chat</h1>
+                  <div>Connet easily</div>
+                  <NavLink
+                    to={auth ? "/pay/" : "/register"}
+                    className="border btn text-white mt-3"
+                  >
+                    {auth ? "pay" : "Sign Up for Free"}
                   </NavLink>
+                  <div className="d-block d-lg-none">
+                    <NavLink className="btn border mt-3 text-white" to="/login">
+                      Login
+                  </NavLink>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Fragment>
-        )}
+            </Fragment>
+          )}
       </div>
     );
   }

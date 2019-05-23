@@ -1,5 +1,13 @@
-export default () => ({
-  host: "ws://localhost:4000",
-  chatroomhost: "ws://localhost:4000/chatroom",
-  darkSkyApiKey: "255ca3e599e402e7891bc5f329f7428c"
-});
+let host, chatroomhost;
+
+const hostname = window.location.hostname;
+
+if (hostname.indexOf("livechat.yarsha.net") >= 0) {
+  host = "ws://livechat.yarsha.net";
+  chatroomhost = "ws://livechat.yarsha.net/chatroom";
+} else {
+  host = "ws://localhost:4000";
+  chatroomhost = "ws://localhost:4000/chatroom";
+}
+
+export { host, chatroomhost };

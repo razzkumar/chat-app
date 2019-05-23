@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import Message from "./Message";
 import Chat from "./Chat";
 import socketIOClient from "socket.io-client";
-import constants from "../../utils/constants";
+import * as C from "../../utils/constants";
 
-const C = constants();
+// const C = constants();
 
 class ChatSection extends Component {
   state = {

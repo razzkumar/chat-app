@@ -80,7 +80,7 @@ class Register extends Component {
             </div>
             <div className="form-row">
               <div className="form-group col-md-6">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password  <small>(password should contain 1 capital letter,1 sepcial char and 1 numeric)</small></label>
                 <input
                   type="password"
                   className="form-control"

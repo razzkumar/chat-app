@@ -30,13 +30,13 @@ class Nav extends Component {
       <nav className="navbar navbar-expand-lg navbar-light">
         <div className="container">
           <NavLink className="navbar-brand" to="/">
-            ChaTTer
+            Live Chat
           </NavLink>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav d-none d-sm-block d-md-none">
               <li className="nav-item active">
                 <NavLink className="nav-link" to="/">
-                  login
+
                 </NavLink>
               </li>
             </ul>
@@ -79,19 +79,19 @@ class Nav extends Component {
               </span>
             </Fragment>
           ) : (
-            <Fragment>
-              <NavLink className="float-right d-none d-lg-block" to="/register">
-                Register
+              <Fragment>
+                <NavLink className="float-right d-none d-lg-block" to="/register">
+                  Register
               </NavLink>
 
-              <NavLink
-                className="float-right d-none d-lg-block ml-3"
-                to="/login"
-              >
-                Login
+                <NavLink
+                  className="float-right d-none d-lg-block ml-3"
+                  to="/login"
+                >
+                  Login
               </NavLink>
-            </Fragment>
-          )}
+              </Fragment>
+            )}
         </div>
       </nav>
     );

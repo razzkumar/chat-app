@@ -4,7 +4,7 @@ import socketIO from "socket.io";
 let users = {};
 
 const getUsers = () => {
-  return Object.keys(users).map(function(key) {
+  return Object.keys(users).map(function (key) {
     return users[key].username;
   });
 };
@@ -33,7 +33,7 @@ const createUser = user => {
 
 const removeSocket = socket_id => {
   let uid = "";
-  Object.keys(users).map(function(key) {
+  Object.keys(users).map(function (key) {
     let sockets = users[key].sockets;
     if (sockets.indexOf(socket_id) !== -1) {
       uid = key;
@@ -98,6 +98,7 @@ export default server => {
     // });
 
     // +++--(on disconnect /chatroom)
+
     socket.on("disconnect", () => {
       console.log("USer  disconect---chat");
       // removeSocket(socket.id);
